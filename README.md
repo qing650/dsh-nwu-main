@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 西北大学教务知识问答系统
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -148,3 +149,5 @@ data/                     教务演示基础数据（运行时知识写入 knowl
 项目代码使用 [MIT License](LICENSE)。DeepSeek Harness 的原始 MIT 许可证、版权声明和第三方依赖声明保留在 `deepseek-harness-master/deepseek-harness-master/`，汇总信息见 [NOTICE.md](NOTICE.md)。
 
 本项目不是西北大学官方软件。示例知识正文仅用于演示系统能力，引用公开网页时请以官网原文为准。
+=======
+
