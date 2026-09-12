@@ -1,0 +1,24 @@
+{
+  "name": "dsh-georag",
+  "description": "西北大学教务知识问答系统的 SQLite 图数据库、图谱检索与增量热更新服务",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./engine.js": "./src/engine.js",
+    "./knowledge-store.js": "./src/knowledge-store.js"
+  },
+  "files": [
+    "src"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1-rc.1"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1-rc.1",
+    "@deepseek-ai/schemastery": "^3.18.1"
+  }
+}

@@ -1,0 +1,24 @@
+# 西北大学教务知识问答系统产品挂载层。
+# 业务工具由两个 agent preset 隔离；宿主提供资料夹收录与知识图谱视图。
+- id: agent-presets
+  config:
+    default: office-qa
+    roots:
+      - path: !!js process.getBuiltinModule('node:path').join(process.cwd(), 'presets')
+        trust: system
+    includeUserRoot: false
+
+- insert:
+    - id: georag
+      name: '__NWU_GEORAG_PLUGIN__'
+      config:
+        dataDir: !!js process.getBuiltinModule('node:path').join(process.cwd(), 'data')
+
+    - id: nwu-intake
+      name: '__NWU_INTAKE_PLUGIN__'
+      config:
+        extractorPath: !!js process.getBuiltinModule('node:path').join(process.cwd(), 'tools/extract_source.py')
+        python: !!js "process.env.NWU_PYTHON || (process.platform === 'win32' ? 'py' : 'python3.11')"
+        pythonArgs: !!js "process.env.NWU_PYTHON_ARGS !== undefined ? process.env.NWU_PYTHON_ARGS.split(',').filter(Boolean) : (process.env.NWU_PYTHON ? [] : (process.platform === 'win32' ? ['-3.11'] : []))"
+        maxUploadBytes: 209715200
+        extractTimeoutMs: 1800000

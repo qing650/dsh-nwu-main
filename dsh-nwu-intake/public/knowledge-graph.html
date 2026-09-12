@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0c1c15">
+  <title>知识图谱｜西北大学教务知识问答系统</title>
+  <style>
+    :root{color:#e7f2e9;background:#0c1c15;font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-synthesis:none}
+    *{box-sizing:border-box}html,body,#graph{width:100%;height:100%;margin:0;overflow:hidden}body{background:radial-gradient(1200px 840px at 76% -12%,#264936 0%,transparent 58%),radial-gradient(800px 660px at -8% 115%,#173728 0%,transparent 62%),#0c1c15}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(rgba(188,218,193,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(188,218,193,.045) 1px,transparent 1px);background-size:42px 42px;mask-image:radial-gradient(ellipse at center,black,transparent 77%)}
+    button,input{font:inherit}button{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #a7d8a8;outline-offset:3px}
+    #graph{position:fixed;inset:0;z-index:1}.app{position:fixed;inset:0;z-index:2;pointer-events:none}
+    .top{position:fixed;z-index:5;left:0;right:0;top:0;display:flex;align-items:center;height:67px;padding:0 24px;border-bottom:1px solid rgba(195,224,201,.1);background:linear-gradient(180deg,rgba(5,18,12,.9),rgba(8,25,17,.72));backdrop-filter:blur(10px)}
+    .brand,.back{pointer-events:auto;text-decoration:none}.brand{display:flex;align-items:center;gap:9px;color:#f0f7f0}.brand-mark{width:25px;height:25px}.brand b{font:650 21px/1 "Noto Serif SC","Songti SC",serif;letter-spacing:.09em}.brand span{margin-left:4px;color:#9fb7a6;font-size:12px}.top-divider{width:1px;height:22px;margin:0 18px;background:rgba(208,230,210,.18)}.view-name{font:600 15px/1 "Noto Serif SC","Songti SC",serif;letter-spacing:.12em;color:#c3d6c6}.dataset{margin-left:auto;display:flex;gap:8px;align-items:center;color:#a2b8a7;font-size:12px}.dataset b{color:#dceadf;font-weight:600}.dataset i{width:5px;height:5px;border-radius:50%;background:#6bb680;box-shadow:0 0 0 4px rgba(107,182,128,.1)}.back{margin-left:24px;color:#b7d6bd;font-size:12px}.back:hover{color:#f0fff2}
+    .toolbox{position:fixed;z-index:4;left:22px;top:89px;width:300px;pointer-events:auto}.panel{contain:layout paint;border:1px solid rgba(203,228,207,.15);border-radius:16px;background:linear-gradient(145deg,rgba(17,39,28,.96),rgba(8,26,17,.92));box-shadow:0 22px 60px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035);backdrop-filter:blur(10px)}
+    .search-row{position:relative}.search{display:flex;align-items:center;gap:9px;padding:11px 13px;border-bottom:1px solid rgba(203,228,207,.1)}.search svg{width:17px;height:17px;color:#94bea0;flex:0 0 auto}.search input{width:100%;border:0;outline:0;background:transparent;color:#e9f4eb;font-size:13px}.search input::placeholder{color:#789381}.search-results{display:none;max-height:266px;overflow:auto;padding:7px}.search-results.show{display:block}.search-result{display:flex;align-items:center;gap:8px;width:100%;padding:9px 8px;border:0;border-radius:9px;background:transparent;text-align:left;color:#dcebe0;font-size:12px;cursor:pointer}.search-result:hover{background:rgba(116,169,125,.13)}.search-result i{width:7px;height:7px;border-radius:50%;flex:0 0 auto}.search-result span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.search-result small{margin-left:auto;color:#85a18d;font-size:10px}
+    .filter-area{margin-top:10px;padding:12px 13px}.filter-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;color:#b7ccba;font-size:11px;letter-spacing:.08em}.filter-title button{border:0;background:transparent;padding:0;color:#83b890;font-size:11px;cursor:pointer}.filter-title button:hover{color:#ccefd1}.filters{display:flex;flex-wrap:wrap;gap:6px}.filter{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(194,224,200,.16);border-radius:999px;padding:6px 8px;background:rgba(24,51,36,.5);color:#c1d4c4;font-size:11px;line-height:1;cursor:pointer;transition:opacity .16s ease,background .16s ease}.filter:hover{background:rgba(61,102,72,.45)}.filter.off{opacity:.36}.filter i{width:6px;height:6px;border-radius:50%}
+    .gap-area{margin-top:10px;padding:12px 13px;max-height:240px;overflow:auto;overscroll-behavior:contain}.gap-count{color:#e8c27a;font-weight:600}.gap-list{margin:0;padding:0;list-style:none;display:grid;gap:6px}.gap-item{display:flex;align-items:flex-start;gap:8px;padding:8px 9px;border:1px solid rgba(232,194,122,.14);border-radius:10px;background:rgba(90,71,32,.16)}.gap-item i{flex:0 0 auto;margin-top:1px;padding:2px 6px;border-radius:999px;background:rgba(232,194,122,.16);color:#ecca88;font-size:10px;font-style:normal;font-weight:650}.gap-item span{color:#e3ddc8;font-size:12px;line-height:1.55;word-break:break-word}.gap-tip{margin-top:10px;color:#87a08a;font-size:10px;line-height:1.6}
+    .guide{position:fixed;z-index:4;left:22px;bottom:22px;display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid rgba(196,226,201,.12);border-radius:999px;background:rgba(10,29,19,.72);color:#9db5a3;font-size:11px;backdrop-filter:blur(15px)}.guide kbd{padding:2px 5px;border:1px solid rgba(209,236,213,.16);border-radius:4px;background:rgba(255,255,255,.055);color:#d6e7d9;font:10px/1 "SFMono-Regular",Consolas,monospace}
+    .hint{position:fixed;z-index:4;left:50%;bottom:30px;transform:translateX(-50%);max-width:min(510px,calc(100vw - 410px));padding:9px 13px;border:1px solid rgba(181,225,189,.12);border-radius:999px;background:rgba(10,29,19,.68);color:#bdcfbf;font-size:12px;line-height:1.35;text-align:center;backdrop-filter:blur(15px);transition:opacity .3s ease}.hint strong{color:#e9f3eb;font-weight:600}.hint.fade{opacity:0}
+    .controls{position:fixed;z-index:7;right:22px;bottom:22px;display:flex;flex-direction:row;gap:7px;pointer-events:auto}.control{display:grid;place-items:center;width:42px;height:42px;border:1px solid rgba(197,227,203,.16);border-radius:13px;background:rgba(14,35,24,.94);box-shadow:0 12px 28px rgba(0,0,0,.17);color:#d3e7d7;font:500 20px/1 "Noto Sans SC",sans-serif;cursor:pointer;transition:transform .14s ease,background .14s ease}.control:hover{background:#244a34;transform:translateY(-1px)}.control:active{transform:scale(.96)}.control.reset{font-size:16px}.control svg{width:18px;height:18px}
+    .inspector{position:fixed;z-index:6;right:22px;top:89px;width:340px;max-height:calc(100vh - 162px);overflow:auto;overscroll-behavior:contain;padding:16px;pointer-events:auto;transform:translateX(calc(100% + 30px));opacity:0;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s ease}.inspector.show{transform:translateX(0);opacity:1}.inspector .close,.inspector .focus-node{position:absolute;top:11px;height:26px;border:0;border-radius:8px;background:transparent;color:#a7beac;line-height:1;cursor:pointer}.inspector .close{right:11px;width:26px;font-size:19px}.inspector .focus-node{right:43px;padding:0 7px;font-size:11px}.inspector .close:hover,.inspector .focus-node:hover{background:rgba(131,180,142,.13);color:#eff8f1}.inspector .close:active,.inspector .focus-node:active{transform:scale(.96)}.eyebrow{display:flex;align-items:center;gap:7px;margin-bottom:9px;padding-right:76px;color:#95b39c;font-size:10px;letter-spacing:.12em}.eyebrow i{width:8px;height:8px;border-radius:50%;background:#77a77d}.inspector h2{max-width:270px;margin:0;color:#edf7ef;font:600 19px/1.4 "Noto Serif SC","Songti SC",serif}.node-meta{margin-top:7px;color:#91aa98;font-size:11px}.node-summary{margin:14px 0 0;color:#c3d3c6;font-size:12px;line-height:1.75}.relation-title{margin:17px 0 8px;color:#90ac97;font-size:10px;letter-spacing:.11em}.relations{display:flex;flex-wrap:wrap;gap:6px}.relation{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:1px solid rgba(177,216,184,.14);border-radius:999px;padding:6px 9px;background:rgba(90,145,102,.1);color:#bdd8c2;font-size:11px;cursor:pointer}.relation:hover{background:rgba(90,145,102,.24);color:#eef9f0}.relation:active{transform:scale(.98)}
+    .inspector{width:min(460px,calc(100vw - 390px));padding:20px}.inspector h2{max-width:380px;font-size:22px}.node-summary:empty{display:none}.note-content{margin-top:16px;padding:14px 2px 4px;border-top:1px solid rgba(190,221,196,.13);color:#cbd9ce;font-size:13px;line-height:1.8}.note-content h2,.note-content h3,.note-content h4{margin:19px 0 8px;color:#edf6ee;font-family:"Noto Serif SC","Songti SC",serif;line-height:1.45}.note-content h2{font-size:17px}.note-content h3{font-size:15px;color:#dcebdd}.note-content h4{font-size:13px}.note-content p{margin:0 0 10px}.note-content ul,.note-content ol{margin:0 0 12px;padding-left:20px}.note-content li{margin:3px 0}.note-content blockquote{margin:10px 0;padding:8px 11px;border-left:3px solid #568b63;background:rgba(92,143,102,.1);color:#b9cdbd}.note-content code{padding:2px 5px;border:1px solid rgba(185,217,191,.12);border-radius:5px;background:rgba(0,0,0,.2);color:#e5efe7;font:11px/1.4 Consolas,monospace}.wiki-link{display:inline;border:0;border-bottom:1px solid rgba(121,192,137,.42);padding:0;background:transparent;color:#8fd29d;cursor:pointer}.wiki-link:hover{color:#c6f0ce;border-bottom-color:#c6f0ce}.wiki-link.missing{color:#a6b5a9;border-bottom-style:dashed;cursor:default}.note-table-wrap{overflow:auto;margin:10px 0 14px;border:1px solid rgba(190,221,196,.12);border-radius:9px}.note-table{width:100%;border-collapse:collapse;font-size:11px}.note-table th,.note-table td{padding:7px 9px;border-right:1px solid rgba(190,221,196,.09);border-bottom:1px solid rgba(190,221,196,.09);text-align:left;vertical-align:top}.note-table th{background:rgba(104,154,114,.12);color:#e2eee4}.note-empty{padding:12px 0;color:#8da393}.note-skeleton{display:grid;gap:10px;padding:4px 0 12px}.note-skeleton i{display:block;height:10px;border-radius:5px;background:linear-gradient(90deg,rgba(143,177,151,.09),rgba(172,207,179,.2),rgba(143,177,151,.09));background-size:220% 100%;animation:skeleton 1.4s ease-in-out infinite}.note-skeleton i:nth-child(1){width:92%}.note-skeleton i:nth-child(2){width:78%}.note-skeleton i:nth-child(3){width:86%}.note-skeleton i:nth-child(4){width:58%}@keyframes skeleton{to{background-position:-220% 0}}.note-limit{margin-top:13px;padding-top:10px;border-top:1px solid rgba(190,221,196,.1);color:#829b89;font-size:11px}.relations{margin-bottom:3px}.loading{position:fixed;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;gap:10px;min-width:224px;padding:14px 16px;border:1px solid rgba(194,227,200,.15);border-radius:14px;background:rgba(11,31,20,.94);box-shadow:0 24px 68px rgba(0,0,0,.3);color:#d3e5d6;font-size:12px}.loading-bars{display:grid;grid-template-columns:1.1fr .8fr .55fr;gap:5px}.loading-bars i{height:3px;border-radius:2px;background:#7eb18a;transform-origin:left;animation:loadbar 1s ease-in-out infinite}.loading-bars i:nth-child(2){animation-delay:.12s}.loading-bars i:nth-child(3){animation-delay:.24s}@keyframes loadbar{50%{transform:scaleX(.35);opacity:.35}}.error{color:#f0c2b6}.hidden{display:none!important}
+    @media(max-width:760px){.top{height:59px;padding:0 14px}.brand span,.top-divider,.dataset,.back{display:none}.brand b{font-size:19px}.view-name{margin-left:auto;font-size:14px}.toolbox{left:12px;top:71px;width:calc(100vw - 24px)}.filter-area,.gap-area{display:none}.inspector{right:12px;top:auto;bottom:12px;width:calc(100vw - 24px);max-height:44vh;padding:14px;transform:translateY(calc(100% + 24px))}.inspector.show{transform:translateY(0)}.guide{left:12px;bottom:12px;padding:8px 10px;font-size:10px;transition:opacity .14s ease}.guide span{display:none}.note-open .guide{opacity:0}.hint{display:none}.controls{right:12px;bottom:12px}.note-open .controls{bottom:calc(44vh + 24px)}.control{width:38px;height:38px;border-radius:12px}.search-results{max-height:210px}.panel,.top,.guide{backdrop-filter:none}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div id="graph" aria-label="可操作的教务知识图谱"></div>
+  <div class="app">
+    <header class="top">
+      <a class="brand" href="/" aria-label="返回西北大学教务问答">
+        <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M5 17.6V27c3.2 2.1 6.7 3 12 3s8.8-.9 12-3v-9.4" stroke="#b9d6ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17.6 20 9l15 8.6L20 26 5 17.6Z" fill="#b9d6ff"/><path d="M32.5 15.6v8.7" stroke="#e6f0ff" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <b>西北大学</b><span>教务知识问答系统</span>
+      </a>
+      <i class="top-divider"></i><div class="view-name">知识图谱</div>
+      <div class="dataset"><i></i><b id="stat">载入中</b><span>教务资料与条目关联</span></div>
+      <a class="back" href="/nwu/knowledge-galaxy">知识星系</a>
+      <a class="back" href="/">返回知识维护</a>
+    </header>
+
+    <section class="toolbox">
+      <div class="panel search-row">
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.1" stroke="currentColor" stroke-width="1.8"/><path d="m15.6 15.6 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input id="search" type="search" autocomplete="off" placeholder="搜索政策、指南、通知或常见问题">
+        </label>
+        <div class="search-results" id="results" role="listbox"></div>
+      </div>
+      <div class="panel filter-area">
+        <div class="filter-title"><span>显示节点</span><button type="button" id="show-all">全部显示</button></div>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="panel gap-area" id="gap-area" hidden>
+        <div class="filter-title"><span>待补充问题</span><span class="gap-count" id="gap-count"></span></div>
+        <ol class="gap-list" id="gap-list"></ol>
+        <div class="gap-tip">这些是教务问答暂未覆盖的问题。在「知识维护」对话里发送“查看知识缺口”，补充资料并发布后即可逐条销掉。</div>
+      </div>
+    </section>
+
+    <aside class="panel inspector" id="inspector" aria-live="polite">
+      <button class="close" id="detail-close" type="button" aria-label="关闭详情">×</button>
+      <button class="focus-node" id="detail-focus" type="button" aria-label="定位到当前节点">定位</button>
+      <div class="eyebrow"><i id="detail-dot"></i><span id="detail-kind"></span></div>
+      <h2 id="detail-title"></h2>
+      <div class="node-meta" id="detail-meta"></div>
+      <p class="node-summary" id="detail-summary"></p>
+      <article class="note-content" id="note-content"></article>
+      <div class="relation-title" id="relation-title"></div>
+      <div class="relations" id="relations"></div>
+    </aside>
+
+    <div class="guide"><kbd>单击</kbd><span>阅读</span><kbd>双击</kbd><span>定位</span><kbd>拖动</kbd><span>平移或调整节点</span></div>
+    <div class="hint" id="hint"><strong>图谱已就绪</strong>，先试着点一个节点。</div>
+    <div class="controls">
+      <button class="control" id="zoom-in" type="button" title="放大" aria-label="放大">+</button>
+      <button class="control" id="zoom-out" type="button" title="缩小" aria-label="缩小">−</button>
+      <button class="control reset" id="fit" type="button" title="查看全图" aria-label="查看全图">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="control reset" id="relayout" type="button" title="重新布局" aria-label="重新布局">↻</button>
+    </div>
+    <div class="loading" id="loading"><span>正在整理资料之间的联系</span><div class="loading-bars" aria-hidden="true"><i></i><i></i><i></i></div></div>
+  </div>
+
+  <script src="/nwu/assets/force-graph.min.js"></script>
+  <script>
+    (() => {
+      const palette = {
+        '资料夹': '#2d6b49', '资料': '#c99543', '草稿': '#bd617f', '索引': '#b47491',
+        '政策文件': '#d2604f', '办事指南': '#3b86c6', '常见问题': '#2aa382',
+        '通知公告': '#e09a35', '名词解释': '#6d6de0',
+      }
+      const graphContainer = document.querySelector('#graph')
+      const loading = document.querySelector('#loading')
+      const hint = document.querySelector('#hint')
+      const stat = document.querySelector('#stat')
+      const search = document.querySelector('#search')
+      const results = document.querySelector('#results')
+      const filters = document.querySelector('#filters')
+      const inspector = document.querySelector('#inspector')
+      const noteContent = document.querySelector('#note-content')
+      const byId = new Map()
+      const byTitle = new Map()
+      const neighbors = new Map()
+      const degree = new Map()
+      const detailCache = new Map()
+      let nodes = []
+      let links = []
+      let activeKinds = new Set()
+      let selected = null
+      let hovered = null
+      let detailRequest = null
+      let initialFitFrame = 0
+      let redrawFrame = 0
+      let nodePointer = null
+      let backgroundPointer = null
+      let lastNodeClick = null
+
+      if (!window.ForceGraph) {
+        loading.innerHTML = '<span class="error">图谱组件加载失败，请检查网络后刷新页面。</span>'
+        return
+      }
+
+      const idOf = value => typeof value === 'object' && value ? value.id : value
+      const color = kind => palette[kind] || '#8aa897'
+      const safeZoom = () => {
+        const value = graph.zoom()
+        return Number.isFinite(value) && value > 0 ? value : 1
+      }
+      function requestGraphRedraw() {
+        if (redrawFrame) return
+        redrawFrame = window.requestAnimationFrame(() => {
+          redrawFrame = 0
+          graph.zoom(safeZoom())
+        })
+      }
+      const getNeighbors = node => neighbors.get(node.id) || new Set()
+      const isVisible = node => activeKinds.has(node.kind)
+      const currentFocus = () => selected || hovered
+      const nodeRadius = node => {
+        const count = degree.get(node.id) || 0
+        if (node.kind === '资料夹') return 17
+        if (node.kind === '草稿') return 10
+        if (node.kind === '资料') return Math.min(11, 7 + Math.sqrt(count) * .7)
+        return Math.min(14, 7 + Math.sqrt(count) * 1.2)
+      }
+      const isFocused = node => {
+        const focus = currentFocus()
+        return !focus || node.id === focus.id || getNeighbors(focus).has(node.id)
+      }
+      const isFocusedLink = link => {
+        const focus = currentFocus()
+        if (!focus) return false
+        return idOf(link.source) === focus.id || idOf(link.target) === focus.id
+      }
+      const labelKindPriority = {
+        '资料夹': 900, '索引': 860, '资料': 80, '草稿': 60,
+        '政策文件': 830, '办事指南': 780, '通知公告': 700, '常见问题': 560, '名词解释': 420,
+      }
+      function labelLines(value, maxChars) {
+        const chars = Array.from(String(value || ''))
+        if (chars.length <= maxChars) return [chars.join('')]
+        const visible = chars.slice(0, maxChars * 2)
+        const truncated = chars.length > visible.length
+        const split = Math.ceil(visible.length / 2)
+        const second = visible.slice(split)
+        if (truncated) second.splice(Math.max(0, second.length - 1), 1, '…')
+        return [visible.slice(0, split).join(''), second.join('')]
+      }
+      function shouldDrawLabel(node, globalScale, focus) {
+        if (node === selected || node === hovered) return true
+        if (focus) return getNeighbors(focus).has(node.id)
+        const count = degree.get(node.id) || 0
+        const major = node.kind === '资料夹' || node.kind === '索引'
+          || node.kind === '政策文件' || node.kind === '办事指南' || node.kind === '常见问题'
+          || node.kind === '通知公告' || node.kind === '名词解释'
+        if (globalScale < .72) return major || count >= 34
+        if (globalScale < 1.05) return major || count >= 24
+        if (globalScale < 1.55) return major || count >= 16
+        if (globalScale < 2.3) return major || count >= 10
+        return true
+      }
+      function labelPriority(node, focus) {
+        let priority = labelKindPriority[node.kind] || 0
+        priority += Math.min(120, degree.get(node.id) || 0) * 8
+        if (focus && getNeighbors(focus).has(node.id)) priority += 2600
+        if (node === hovered) priority += 8000
+        if (node === selected) priority += 12000
+        return priority
+      }
+      function overlapsLabel(left, right) {
+        return left.x < right.x + right.width && left.x + left.width > right.x
+          && left.y < right.y + right.height && left.y + left.height > right.y
+      }
+      function roundRectPath(context, x, y, width, height, radius) {
+        const r = Math.min(radius, width / 2, height / 2)
+        context.beginPath()
+        context.moveTo(x + r, y)
+        context.arcTo(x + width, y, x + width, y + height, r)
+        context.arcTo(x + width, y + height, x, y + height, r)
+        context.arcTo(x, y + height, x, y, r)
+        context.arcTo(x, y, x + width, y, r)
+        context.closePath()
+      }
+      function drawGraphLabels(context, globalScale) {
+        if (!Number.isFinite(globalScale) || globalScale <= 0) return
+        const focus = currentFocus()
+        const occupied = []
+        const candidates = nodes
+          .filter(node => isVisible(node) && Number.isFinite(node.x) && Number.isFinite(node.y) && shouldDrawLabel(node, globalScale, focus))
+          .sort((left, right) => labelPriority(right, focus) - labelPriority(left, focus))
+
+        for (const node of candidates) {
+          const isCurrent = node === selected
+          const isHover = node === hovered
+          const count = degree.get(node.id) || 0
+          const screenFontSize = isCurrent ? 13 : isHover ? 12.5 : count >= 30 ? 11.5 : 10.5
+          const fontSize = screenFontSize / globalScale
+          const fontWeight = isCurrent || isHover ? 650 : count >= 24 ? 600 : 500
+          const maxChars = isCurrent || isHover ? 16 : count >= 24 ? 13 : 11
+          const lines = labelLines(node.title, maxChars)
+          const lineHeight = (screenFontSize + 3) / globalScale
+          const horizontalPadding = (isCurrent || isHover ? 7 : 4) / globalScale
+          const verticalPadding = (isCurrent || isHover ? 4 : 2) / globalScale
+
+          context.save()
+          context.font = fontWeight + ' ' + fontSize + 'px "Noto Sans SC","Microsoft YaHei UI","Microsoft YaHei",sans-serif'
+          const textWidth = Math.max(...lines.map(line => context.measureText(line).width))
+          const width = textWidth + horizontalPadding * 2
+          const height = lineHeight * lines.length + verticalPadding * 2
+          const radius = nodeRadius(node)
+          const gap = (isCurrent || isHover ? 8 : 6) / globalScale
+          const placements = [
+            { x: node.x - width / 2, y: node.y + radius + gap, width, height },
+            { x: node.x - width / 2, y: node.y - radius - gap - height, width, height },
+            { x: node.x + radius + gap, y: node.y - height / 2, width, height },
+            { x: node.x - radius - gap - width, y: node.y - height / 2, width, height },
+          ]
+          const forceLabel = isCurrent || isHover
+          const box = placements.find(place => forceLabel || !occupied.some(other => overlapsLabel(place, other)))
+          if (!box) {
+            context.restore()
+            continue
+          }
+          occupied.push({
+            x: box.x - 3 / globalScale,
+            y: box.y - 2 / globalScale,
+            width: box.width + 6 / globalScale,
+            height: box.height + 4 / globalScale,
+          })
+
+          if (forceLabel) {
+            roundRectPath(context, box.x, box.y, width, height, 6 / globalScale)
+            context.fillStyle = 'rgba(6,20,12,.9)'
+            context.fill()
+            context.lineWidth = 1 / globalScale
+            context.strokeStyle = color(node.kind)
+            context.stroke()
+          }
+
+          context.textAlign = 'center'
+          context.textBaseline = 'top'
+          context.lineJoin = 'round'
+          context.lineWidth = (isCurrent || isHover ? 4.5 : 3.2) / globalScale
+          context.strokeStyle = 'rgba(5,17,11,.94)'
+          context.fillStyle = isCurrent || isHover ? '#f5fbf6' : count >= 24 ? '#e3efe5' : '#c8d9cc'
+          lines.forEach((line, index) => {
+            const x = box.x + width / 2
+            const y = box.y + verticalPadding + lineHeight * index
+            context.strokeText(line, x, y)
+            context.fillText(line, x, y)
+          })
+          context.restore()
+        }
+      }
+      const graph = ForceGraph()(graphContainer)
+        .backgroundColor('rgba(0,0,0,0)')
+        .nodeId('id')
+        .enablePointerInteraction(false)
+        .enableNodeDrag(false)
+        .enablePanInteraction(true)
+        .enableZoomInteraction(true)
+        .autoPauseRedraw(true)
+        .nodeVal(node => Math.max(2, nodeRadius(node) * nodeRadius(node) / 4))
+        .nodeRelSize(1)
+        .nodeVisibility(isVisible)
+        .linkVisibility(link => {
+          const source = byId.get(idOf(link.source))
+          const target = byId.get(idOf(link.target))
+          return !!source && !!target && isVisible(source) && isVisible(target)
+        })
+        .linkColor(link => isFocusedLink(link) ? 'rgba(185,228,191,.78)' : 'rgba(134,173,145,.105)')
+        .linkWidth(link => isFocusedLink(link) ? 1.45 : link.type === 'evidence' ? .68 : .45)
+        .nodeCanvasObjectMode(() => 'replace')
+        .nodeCanvasObject((node, context, globalScale) => {
+          if (!isVisible(node)) return
+          const focus = currentFocus()
+          const active = isFocused(node)
+          const radius = nodeRadius(node)
+          const isCurrent = focus && node.id === focus.id
+          context.save()
+          context.globalAlpha = active ? 1 : .11
+          if (isCurrent) {
+            context.beginPath()
+            context.arc(node.x, node.y, radius + 5 / globalScale, 0, Math.PI * 2)
+            context.fillStyle = 'rgba(183,235,194,.18)'
+            context.fill()
+          }
+          context.beginPath()
+          context.arc(node.x, node.y, radius, 0, Math.PI * 2)
+          context.fillStyle = color(node.kind)
+          context.fill()
+          context.lineWidth = (isCurrent ? 2 : .7) / globalScale
+          context.strokeStyle = isCurrent ? '#ecf8ed' : 'rgba(224,243,227,.26)'
+          context.stroke()
+          context.restore()
+        })
+        .onRenderFramePost((context, globalScale) => drawGraphLabels(context, globalScale))
+
+      window.__nwuGraph = graph
+
+      function pickNodeAt(clientX, clientY) {
+        const point = graph.screen2GraphCoords(clientX, clientY)
+        const zoom = Math.max(safeZoom(), .2)
+        let nearest = null
+        let nearestDistance = Infinity
+        for (const node of nodes) {
+          if (!isVisible(node) || !Number.isFinite(node.x) || !Number.isFinite(node.y)) continue
+          const distance = Math.hypot(node.x - point.x, node.y - point.y)
+          const hitRadius = nodeRadius(node) + 10 / zoom
+          if (distance <= hitRadius && distance < nearestDistance) {
+            nearest = node
+            nearestDistance = distance
+          }
+        }
+        return nearest
+      }
+      function setHoveredNode(node) {
+        const next = node || null
+        if (hovered === next) return
+        hovered = next
+        window.__nwuHoveredNodeId = hovered ? hovered.id : null
+        graphContainer.style.cursor = hovered ? 'pointer' : 'grab'
+        requestGraphRedraw()
+      }
+      function restorePointerNode(pointer) {
+        if (pointer.previousFx === undefined) delete pointer.node.fx
+        else pointer.node.fx = pointer.previousFx
+        if (pointer.previousFy === undefined) delete pointer.node.fy
+        else pointer.node.fy = pointer.previousFy
+      }
+      graphContainer.addEventListener('pointerdown', event => {
+        if (event.button !== 0) return
+        const node = pickNodeAt(event.clientX, event.clientY)
+        if (!node) {
+          backgroundPointer = { id: event.pointerId, x: event.clientX, y: event.clientY }
+          lastNodeClick = null
+          return
+        }
+        backgroundPointer = null
+        const point = graph.screen2GraphCoords(event.clientX, event.clientY)
+        nodePointer = {
+          id: event.pointerId,
+          node,
+          clientX: event.clientX,
+          clientY: event.clientY,
+          graphX: point.x,
+          graphY: point.y,
+          nodeX: node.x,
+          nodeY: node.y,
+          previousFx: node.fx,
+          previousFy: node.fy,
+          dragging: false,
+        }
+        node.fx = node.x
+        node.fy = node.y
+        graphContainer.setPointerCapture(event.pointerId)
+        graphContainer.style.cursor = 'grabbing'
+        event.preventDefault()
+        event.stopPropagation()
+      }, true)
+      graphContainer.addEventListener('pointermove', event => {
+        if (!nodePointer || nodePointer.id !== event.pointerId) {
+          if (event.buttons === 0) setHoveredNode(pickNodeAt(event.clientX, event.clientY))
+          else graphContainer.style.cursor = 'grabbing'
+          return
+        }
+        const moved = Math.hypot(event.clientX - nodePointer.clientX, event.clientY - nodePointer.clientY)
+        if (!nodePointer.dragging && moved < 4) return
+        if (!nodePointer.dragging) {
+          nodePointer.dragging = true
+          graph.d3ReheatSimulation()
+        }
+        const point = graph.screen2GraphCoords(event.clientX, event.clientY)
+        nodePointer.node.x = nodePointer.node.fx = nodePointer.nodeX + point.x - nodePointer.graphX
+        nodePointer.node.y = nodePointer.node.fy = nodePointer.nodeY + point.y - nodePointer.graphY
+        requestGraphRedraw()
+        event.preventDefault()
+        event.stopPropagation()
+      }, true)
+      graphContainer.addEventListener('pointerup', event => {
+        if (!nodePointer || nodePointer.id !== event.pointerId) {
+          if (backgroundPointer && backgroundPointer.id === event.pointerId) {
+            const moved = Math.hypot(event.clientX - backgroundPointer.x, event.clientY - backgroundPointer.y)
+            backgroundPointer = null
+            if (moved < 4) clearSelection()
+          }
+          if (event.buttons === 0) setHoveredNode(pickNodeAt(event.clientX, event.clientY))
+          return
+        }
+        const pointer = nodePointer
+        nodePointer = null
+        graphContainer.releasePointerCapture(event.pointerId)
+        if (pointer.dragging) {
+          lastNodeClick = null
+          pointer.node.fx = pointer.node.x
+          pointer.node.fy = pointer.node.y
+          hint.innerHTML = '<strong>节点位置已调整</strong>，点击重新布局可恢复自动排布。'
+          hint.classList.remove('fade')
+        } else {
+          restorePointerNode(pointer)
+          const now = performance.now()
+          const focus = lastNodeClick && lastNodeClick.id === pointer.node.id && now - lastNodeClick.at < 360
+          selectNode(pointer.node, Boolean(focus))
+          lastNodeClick = focus ? null : { id: pointer.node.id, at: now }
+        }
+        setHoveredNode(pointer.node)
+        requestGraphRedraw()
+        event.preventDefault()
+        event.stopPropagation()
+      }, true)
+      graphContainer.addEventListener('pointercancel', event => {
+        if (backgroundPointer && backgroundPointer.id === event.pointerId) backgroundPointer = null
+        if (!nodePointer || nodePointer.id !== event.pointerId) return
+        const pointer = nodePointer
+        nodePointer = null
+        restorePointerNode(pointer)
+        setHoveredNode(null)
+        requestGraphRedraw()
+      }, true)
+      graphContainer.addEventListener('pointerleave', () => {
+        if (!nodePointer) setHoveredNode(null)
+      })
+      graph.d3Force('charge').strength(node => node.kind === '资料' ? -56 : -130)
+      graph.d3Force('link').distance(link => link.type === 'evidence' ? 38 : link.type === 'source' ? 52 : 70).strength(link => link.type === 'knowledge' ? .42 : .72)
+      graph.d3AlphaDecay(.038)
+      graph.d3VelocityDecay(.44)
+      graph.warmupTicks(45)
+      graph.cooldownTime(1300)
+
+      function appendInline(container, value) {
+        const text = String(value || '')
+        const pattern = /\[\[([^\]]+)\]\]|\*\*([^*]+)\*\*/g
+        let cursor = 0
+        let match
+        while ((match = pattern.exec(text))) {
+          if (match.index > cursor) container.append(document.createTextNode(text.slice(cursor, match.index)))
+          if (match[1]) {
+            const raw = match[1].replace(/\\\|/g, '|')
+            const parts = raw.split('|')
+            const target = parts[0].split('#')[0].trim()
+            const label = (parts[1] || target).trim()
+            const linked = byTitle.get(target) || byId.get(target)
+            const button = document.createElement('button')
+            button.type = 'button'
+            button.className = 'wiki-link' + (linked ? '' : ' missing')
+            button.textContent = label
+            if (linked) {
+              button.title = '打开 ' + target
+              button.addEventListener('click', () => selectNode(linked, true))
+            } else {
+              button.title = '图谱中没有找到 ' + target
+              button.disabled = true
+            }
+            container.append(button)
+          } else {
+            const strong = document.createElement('strong')
+            strong.textContent = match[2]
+            container.append(strong)
+          }
+          cursor = pattern.lastIndex
+        }
+        if (cursor < text.length) container.append(document.createTextNode(text.slice(cursor)))
+      }
+      function appendTable(lines, start, container) {
+        const splitCells = line => line.trim().replace(/^\||\|$/g, '').split('|').map(cell => cell.trim())
+        const wrap = document.createElement('div')
+        wrap.className = 'note-table-wrap'
+        const table = document.createElement('table')
+        table.className = 'note-table'
+        const head = document.createElement('thead')
+        const headRow = document.createElement('tr')
+        for (const cell of splitCells(lines[start])) {
+          const th = document.createElement('th')
+          appendInline(th, cell)
+          headRow.append(th)
+        }
+        head.append(headRow)
+        table.append(head)
+        const body = document.createElement('tbody')
+        let index = start + 2
+        while (index < lines.length && lines[index].includes('|') && lines[index].trim()) {
+          const row = document.createElement('tr')
+          for (const cell of splitCells(lines[index])) {
+            const td = document.createElement('td')
+            appendInline(td, cell)
+            row.append(td)
+          }
+          body.append(row)
+          index++
+        }
+        table.append(body)
+        wrap.append(table)
+        container.append(wrap)
+        return index
+      }
+      function renderMarkdown(value, node) {
+        const container = noteContent
+        container.replaceChildren()
+        const clean = String(value || '')
+          .replace(/^---[\s\S]*?---\s*/u, '')
+          .replace(/\{\{photo:[^}]+\}\}/g, '')
+          .trim()
+        if (!clean) {
+          const empty = document.createElement('p')
+          empty.className = 'note-empty'
+          empty.textContent = '这个节点目前只有关系信息，还没有可阅读的正文。'
+          container.append(empty)
+          return
+        }
+        const lines = clean.split(/\r?\n/)
+        let index = 0
+        while (index < lines.length) {
+          const line = lines[index].trim()
+          if (!line) {
+            index++
+            continue
+          }
+          const next = index + 1 < lines.length ? lines[index + 1].trim() : ''
+          if (line.includes('|') && /^\|?\s*:?-{3,}/.test(next)) {
+            index = appendTable(lines, index, container)
+            continue
+          }
+          const heading = line.match(/^(#{1,4})\s+(.+)$/)
+          if (heading) {
+            const text = heading[2].trim()
+            if (!(heading[1].length === 1 && text === node.title)) {
+              const element = document.createElement(heading[1].length <= 2 ? 'h2' : heading[1].length === 3 ? 'h3' : 'h4')
+              appendInline(element, text)
+              container.append(element)
+            }
+            index++
+            continue
+          }
+          if (/^[-*]\s+/.test(line)) {
+            const list = document.createElement('ul')
+            while (index < lines.length && /^[-*]\s+/.test(lines[index].trim())) {
+              const item = document.createElement('li')
+              appendInline(item, lines[index].trim().replace(/^[-*]\s+/, ''))
+              list.append(item)
+              index++
+            }
+            container.append(list)
+            continue
+          }
+          if (/^\d+[.)]\s+/.test(line)) {
+            const list = document.createElement('ol')
+            while (index < lines.length && /^\d+[.)]\s+/.test(lines[index].trim())) {
+              const item = document.createElement('li')
+              appendInline(item, lines[index].trim().replace(/^\d+[.)]\s+/, ''))
+              list.append(item)
+              index++
+            }
+            container.append(list)
+            continue
+          }
+          if (/^>\s?/.test(line)) {
+            const quote = document.createElement('blockquote')
+            appendInline(quote, line.replace(/^>\s?/, ''))
+            container.append(quote)
+            index++
+            continue
+          }
+          if (/^---+$/.test(line)) {
+            container.append(document.createElement('hr'))
+            index++
+            continue
+          }
+          const paragraph = []
+          while (index < lines.length) {
+            const current = lines[index].trim()
+            if (!current || /^(#{1,4})\s+/.test(current) || /^[-*]\s+/.test(current) || /^\d+[.)]\s+/.test(current) || /^>\s?/.test(current)) break
+            if (current.includes('|') && index + 1 < lines.length && /^\|?\s*:?-{3,}/.test(lines[index + 1].trim())) break
+            paragraph.push(current.replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1'))
+            index++
+          }
+          if (paragraph.length) {
+            const element = document.createElement('p')
+            appendInline(element, paragraph.join(' '))
+            container.append(element)
+          } else {
+            index++
+          }
+        }
+      }
+      function renderNoteLoading() {
+        const skeleton = document.createElement('div')
+        skeleton.className = 'note-skeleton'
+        skeleton.setAttribute('aria-label', '正在读取节点内容')
+        for (let index = 0; index < 4; index++) skeleton.append(document.createElement('i'))
+        noteContent.replaceChildren(skeleton)
+      }
+      function renderNodeBody(node, detail) {
+        const body = detail && (detail.markdown || detail.content) || ''
+        renderMarkdown(body, node)
+        document.querySelector('#detail-summary').textContent = body ? '' : makeSummary(node)
+        if (detail && detail.truncated) {
+          const limit = document.createElement('div')
+          limit.className = 'note-limit'
+          limit.textContent = '这份资料较长，当前显示前 30,000 字。'
+          noteContent.append(limit)
+        }
+      }
+      function cancelDetailRequest() {
+        if (!detailRequest) return
+        detailRequest.abort()
+        detailRequest = null
+      }
+      async function loadNodeDetail(node) {
+        const cached = detailCache.get(node.id)
+        if (cached) {
+          renderNodeBody(node, cached)
+          return
+        }
+        if (!node.hasContent) {
+          renderNodeBody(node, null)
+          return
+        }
+        cancelDetailRequest()
+        const controller = new AbortController()
+        detailRequest = controller
+        renderNoteLoading()
+        try {
+          const response = await fetch('/nwu/api/evolution/node?id=' + encodeURIComponent(node.id), {
+            cache: 'no-store',
+            signal: controller.signal,
+          })
+          if (!response.ok) throw new Error('接口返回 ' + response.status)
+          const detail = await response.json()
+          detailCache.set(node.id, detail)
+          if (selected && selected.id === node.id) renderNodeBody(node, detail)
+        } catch (error) {
+          if (error && error.name === 'AbortError') return
+          if (!selected || selected.id !== node.id) return
+          const message = document.createElement('p')
+          message.className = 'note-empty error'
+          message.textContent = '节点内容读取失败，请稍后重试。'
+          noteContent.replaceChildren(message)
+        } finally {
+          if (detailRequest === controller) detailRequest = null
+        }
+      }
+      function makeSummary(node) {
+        if (node.hasContent) return ''
+        if (node.summary) return node.summary
+        if (node.kind === '资料') return '这份原始资料已收录到当前教务资料夹。图谱依据文件名、目录和已提取内容建立关联。'
+        if (node.kind === '草稿') return '这是待处理的知识草稿，完成核对后可以进入正式知识库。'
+        return '选择相邻节点，可以继续追踪这条知识与资料之间的关联。'
+      }
+      function displayNode(node) {
+        document.querySelector('#detail-dot').style.background = color(node.kind)
+        document.querySelector('#detail-kind').textContent = node.kind
+        document.querySelector('#detail-title').textContent = node.title
+        const linked = getNeighbors(node)
+        const meta = node.kind === '资料' && node.fileKind ? node.fileKind + '资料' : node.subtitle || node.kind
+        document.querySelector('#detail-meta').textContent = meta + ' · ' + linked.size + ' 条直接关联'
+        document.querySelector('#detail-summary').textContent = makeSummary(node)
+        loadNodeDetail(node)
+        const title = document.querySelector('#relation-title')
+        const relationBox = document.querySelector('#relations')
+        relationBox.replaceChildren()
+        title.textContent = '直接关联'
+        const linkedNodes = [...linked].map(id => byId.get(id)).filter(Boolean).sort((a, b) => (degree.get(b.id) || 0) - (degree.get(a.id) || 0)).slice(0, 14)
+        if (!linkedNodes.length) {
+          const empty = document.createElement('span')
+          empty.textContent = '暂未形成直接关联'
+          empty.style.color = '#8fa79a'
+          empty.style.fontSize = '11px'
+          relationBox.append(empty)
+        }
+        for (const related of linkedNodes) {
+          const button = document.createElement('button')
+          button.type = 'button'
+          button.className = 'relation'
+          button.textContent = related.title
+          button.title = '查看 ' + related.title
+          button.addEventListener('click', () => selectNode(related, true))
+          relationBox.append(button)
+        }
+        inspector.classList.add('show')
+        document.body.classList.add('note-open')
+        inspector.scrollTop = 0
+      }
+      function focusNode(node) {
+        if (!node || !Number.isFinite(node.x) || !Number.isFinite(node.y)) return
+        const currentZoom = safeZoom()
+        const targetZoom = Math.max(currentZoom, 1.08)
+        const isMobile = window.innerWidth <= 760
+        const occupiedWidth = isMobile ? 0 : inspector.offsetWidth + 44
+        const occupiedHeight = isMobile ? inspector.offsetHeight + 24 : 0
+        graph.centerAt(
+          node.x + occupiedWidth / (2 * targetZoom),
+          node.y + occupiedHeight / (2 * targetZoom),
+          0,
+        )
+        if (targetZoom !== currentZoom) graph.zoom(targetZoom)
+      }
+      function selectNode(node, focus) {
+        if (!node || !isVisible(node)) return
+        const changed = !selected || selected.id !== node.id
+        selected = node
+        if (changed) displayNode(node)
+        else {
+          inspector.classList.add('show')
+          document.body.classList.add('note-open')
+        }
+        requestGraphRedraw()
+        if (focus) focusNode(node)
+      }
+      function clearSelection() {
+        cancelDetailRequest()
+        lastNodeClick = null
+        selected = null
+        inspector.classList.remove('show')
+        document.body.classList.remove('note-open')
+        requestGraphRedraw()
+      }
+      function renderFilters() {
+        filters.replaceChildren()
+        const kinds = [...new Set(nodes.map(node => node.kind))].sort((left, right) => left.localeCompare(right, 'zh-CN'))
+        for (const kind of kinds) {
+          const count = nodes.filter(node => node.kind === kind).length
+          const button = document.createElement('button')
+          button.type = 'button'
+          button.className = 'filter' + (activeKinds.has(kind) ? '' : ' off')
+          button.setAttribute('aria-pressed', String(activeKinds.has(kind)))
+          const dot = document.createElement('i')
+          dot.style.background = color(kind)
+          button.append(dot, document.createTextNode(kind + ' ' + count))
+          button.addEventListener('click', () => {
+            if (activeKinds.has(kind)) activeKinds.delete(kind)
+            else activeKinds.add(kind)
+            if (selected && !activeKinds.has(selected.kind)) clearSelection()
+            renderFilters()
+            requestGraphRedraw()
+          })
+          filters.append(button)
+        }
+      }
+      function showResults() {
+        const query = search.value.trim().toLocaleLowerCase()
+        results.replaceChildren()
+        if (!query) {
+          results.classList.remove('show')
+          return
+        }
+        const matches = nodes
+          .filter(node => (String(node.title) + ' ' + String(node.subtitle || '') + ' ' + String(node.kind)).toLocaleLowerCase().includes(query))
+          .slice(0, 10)
+        for (const node of matches) {
+          const button = document.createElement('button')
+          button.type = 'button'
+          button.className = 'search-result'
+          button.setAttribute('role', 'option')
+          const dot = document.createElement('i')
+          dot.style.background = color(node.kind)
+          const label = document.createElement('span')
+          label.textContent = node.title
+          const kind = document.createElement('small')
+          kind.textContent = node.kind
+          button.append(dot, label, kind)
+          button.addEventListener('click', () => {
+            activeKinds.add(node.kind)
+            renderFilters()
+            search.value = ''
+            results.classList.remove('show')
+            selectNode(node, true)
+          })
+          results.append(button)
+        }
+        results.classList.toggle('show', matches.length > 0)
+      }
+      function clearFixedPositions() {
+        for (const node of nodes) {
+          delete node.fx
+          delete node.fy
+        }
+        graph.d3ReheatSimulation()
+        hint.innerHTML = '<strong>正在重新布局</strong>，图谱会在片刻后稳定。'
+        hint.classList.remove('fade')
+        window.setTimeout(() => hint.classList.add('fade'), 3600)
+      }
+      function scheduleInitialFit(attempt = 0) {
+        window.cancelAnimationFrame(initialFitFrame)
+        initialFitFrame = window.requestAnimationFrame(() => {
+          const ready = nodes.length > 0
+            && Number.isFinite(graph.zoom())
+            && graph.zoom() > 0
+            && nodes.every(node => Number.isFinite(node.x) && Number.isFinite(node.y))
+          if (!ready && attempt < 120) {
+            scheduleInitialFit(attempt + 1)
+            return
+          }
+          if (!ready) graph.zoom(1)
+          graph.zoomToFit(0, 96, isVisible)
+          const minimumZoom = window.innerWidth <= 760 ? .62 : .55
+          if (safeZoom() < minimumZoom) {
+            graph.zoom(minimumZoom)
+            const visibleNodes = nodes.filter(node => isVisible(node) && Number.isFinite(node.x) && Number.isFinite(node.y))
+            const xs = visibleNodes.map(node => node.x).sort((left, right) => left - right)
+            const ys = visibleNodes.map(node => node.y).sort((left, right) => left - right)
+            const middle = Math.floor(visibleNodes.length / 2)
+            const centerX = visibleNodes.length % 2 ? xs[middle] : (xs[middle - 1] + xs[middle]) / 2
+            const centerY = visibleNodes.length % 2 ? ys[middle] : (ys[middle - 1] + ys[middle]) / 2
+            graph.centerAt(centerX, centerY, 0)
+          }
+          window.setTimeout(() => hint.classList.add('fade'), 5200)
+        })
+      }
+      async function load() {
+        loading.classList.remove('hidden')
+        try {
+          const response = await fetch('/nwu/api/evolution/graph', { cache: 'no-store' })
+          if (!response.ok) throw new Error('接口返回 ' + response.status)
+          const payload = await response.json()
+          nodes = (payload.nodes || []).map(node => ({ ...node, id: String(node.id), title: String(node.title || '未命名知识') }))
+          links = (payload.links || []).map(link => ({ ...link, source: String(link.source), target: String(link.target) }))
+          byId.clear()
+          byTitle.clear()
+          neighbors.clear()
+          degree.clear()
+          for (const node of nodes) {
+            byId.set(node.id, node)
+            if (!byTitle.has(node.title)) byTitle.set(node.title, node)
+            neighbors.set(node.id, new Set())
+            degree.set(node.id, 0)
+          }
+          for (const link of links) {
+            if (!byId.has(link.source) || !byId.has(link.target)) continue
+            neighbors.get(link.source).add(link.target)
+            neighbors.get(link.target).add(link.source)
+            degree.set(link.source, (degree.get(link.source) || 0) + 1)
+            degree.set(link.target, (degree.get(link.target) || 0) + 1)
+          }
+          activeKinds = new Set(nodes.map(node => node.kind))
+          cancelDetailRequest()
+          detailCache.clear()
+          selected = null
+          hovered = null
+          renderFilters()
+          const stats = payload.stats || {}
+          stat.textContent = (stats.graphNodes || nodes.length) + ' 个节点 · ' + (stats.graphLinks || links.length) + ' 条关联'
+          graph.graphData({ nodes, links })
+          graph.d3ReheatSimulation()
+          scheduleInitialFit()
+          const focusId = new URLSearchParams(location.search).get('focus')
+          if (focusId) {
+            const target = byId.get(focusId) || byTitle.get(focusId)
+            if (target) window.setTimeout(() => selectNode(target, true), 900)
+          }
+        } catch (error) {
+          loading.innerHTML = '<span class="error">知识图谱加载失败：' + String(error.message || error) + '</span>'
+          return
+        }
+        loading.classList.add('hidden')
+      }
+
+      async function loadGaps() {
+        const area = document.querySelector('#gap-area')
+        try {
+          const response = await fetch('/nwu/api/evolution/gaps?status=open', { cache: 'no-store' })
+          if (!response.ok) return
+          const payload = await response.json()
+          const list = document.querySelector('#gap-list')
+          list.replaceChildren()
+          if (!payload.gaps.length) {
+            area.hidden = true
+            return
+          }
+          document.querySelector('#gap-count').textContent = payload.count + ' 条待补'
+          for (const gap of payload.gaps.slice(0, 30)) {
+            const item = document.createElement('li')
+            item.className = 'gap-item'
+            item.title = '首次提问 ' + String(gap.firstReportedAt || '').slice(0, 10)
+              + (gap.notes && gap.notes.length ? '\n线索：' + gap.notes.join('；') : '')
+            const badge = document.createElement('i')
+            badge.textContent = '×' + gap.count
+            const question = document.createElement('span')
+            question.textContent = gap.question
+            item.append(badge, question)
+            list.append(item)
+          }
+          area.hidden = false
+        } catch {
+          area.hidden = true
+        }
+      }
+
+      search.addEventListener('input', showResults)
+      search.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+          const first = results.querySelector('.search-result')
+          if (first) first.click()
+        }
+        if (event.key === 'Escape') {
+          search.value = ''
+          showResults()
+          search.blur()
+        }
+      })
+      document.querySelector('#show-all').addEventListener('click', () => {
+        activeKinds = new Set(nodes.map(node => node.kind))
+        renderFilters()
+        requestGraphRedraw()
+      })
+      document.querySelector('#zoom-in').addEventListener('click', () => graph.zoom(safeZoom() * 1.24))
+      document.querySelector('#zoom-out').addEventListener('click', () => graph.zoom(safeZoom() / 1.24))
+      document.querySelector('#fit').addEventListener('click', () => graph.zoomToFit(0, 96, isVisible))
+      document.querySelector('#relayout').addEventListener('click', clearFixedPositions)
+      document.querySelector('#detail-focus').addEventListener('click', () => focusNode(selected))
+      document.querySelector('#detail-close').addEventListener('click', clearSelection)
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && document.activeElement !== search) clearSelection()
+      })
+      let resizeFrame = 0
+      window.addEventListener('resize', () => {
+        window.cancelAnimationFrame(resizeFrame)
+        resizeFrame = window.requestAnimationFrame(() => graph.width(window.innerWidth).height(window.innerHeight))
+      })
+      load()
+      loadGaps()
+    })()
+  </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="960pt" height="540pt" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-08-21T10:30:17.955195</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 540 
+L 960 540 
+L 960 0 
+L 0 0 
+L 0 540 
+z
+" style="fill: none; opacity: 0"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 124.8 459 
+L 931.2 459 
+L 931.2 75.6 
+L 124.8 75.6 
+L 124.8 459 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 223.141463 459 
+L 223.141463 75.6 
+" clip-path="url(#p2a4059bf77)" style="fill: none; stroke: #d7e0d4; stroke-opacity: 0.75; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2"/>
+     <g id="text_1">
+      <text style="font-size: 12px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183025" x="223.141463" y="472.0925" transform="rotate(-0 223.141463 472.0925)">-5</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 419.82439 459 
+L 419.82439 75.6 
+" clip-path="url(#p2a4059bf77)" style="fill: none; stroke: #d7e0d4; stroke-opacity: 0.75; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4"/>
+     <g id="text_2">
+      <text style="font-size: 12px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183025" x="419.82439" y="472.0925" transform="rotate(-0 419.82439 472.0925)">0</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 616.507317 459 
+L 616.507317 75.6 
+" clip-path="url(#p2a4059bf77)" style="fill: none; stroke: #d7e0d4; stroke-opacity: 0.75; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6"/>
+     <g id="text_3">
+      <text style="font-size: 12px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183025" x="616.507317" y="472.0925" transform="rotate(-0 616.507317 472.0925)">5</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 813.190244 459 
+L 813.190244 75.6 
+" clip-path="url(#p2a4059bf77)" style="fill: none; stroke: #d7e0d4; stroke-opacity: 0.75; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8"/>
+     <g id="text_4">
+      <text style="font-size: 12px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183025" x="813.190244" y="472.0925" transform="rotate(-0 813.190244 472.0925)">10</text>
+     </g>
+    </g>
+    <g id="text_5">
+     <text style="font-size: 14px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183025" x="528" y="496.266875" transform="rotate(-0 528 496.266875)">首条命中率变化（百分点）</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_9"/>
+     <g id="text_6">
+      <text style="font-size: 12px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #183025" x="121.3" y="127.671338" transform="rotate(-0 121.3 127.671338)">概念问答</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_10"/>
+     <g id="text_7">
+      <text style="font-size: 12px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #183025" x="121.3" y="223.954613" transform="rotate(-0 121.3 223.954613)">讲解内容</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_11"/>
+     <g id="text_8">
+      <text style="font-size: 12px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #183025" x="121.3" y="320.237887" transform="rotate(-0 121.3 320.237887)">附近查询</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_12"/>
+     <g id="text_9">
+      <text style="font-size: 12px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #183025" x="121.3" y="416.521162" transform="rotate(-0 121.3 416.521162)">全部题目</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 419.82439 122.875088 
+L 640.816443 122.875088 
+L 640.816443 152.722903 
+L 419.82439 152.722903 
+z
+" clip-path="url(#p2a4059bf77)" style="fill: #76a55f"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 419.82439 219.158363 
+L 419.82439 219.158363 
+L 419.82439 249.006178 
+L 419.82439 249.006178 
+z
+" clip-path="url(#p2a4059bf77)" style="fill: #76a55f"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 419.82439 315.441637 
+L 207.194199 315.441637 
+L 207.194199 345.289453 
+L 419.82439 345.289453 
+z
+" clip-path="url(#p2a4059bf77)" style="fill: #76a55f"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 419.82439 411.724912 
+L 497.462388 411.724912 
+L 497.462388 441.572727 
+L 419.82439 441.572727 
+z
+" clip-path="url(#p2a4059bf77)" style="fill: #76a55f"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 419.82439 93.027273 
+L 419.82439 93.027273 
+L 419.82439 122.875088 
+L 419.82439 122.875088 
+z
+" clip-path="url(#p2a4059bf77)" style="fill: #056030"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 419.82439 189.310547 
+L 268.529831 189.310547 
+L 268.529831 219.158363 
+L 419.82439 219.158363 
+z
+" clip-path="url(#p2a4059bf77)" style="fill: #056030"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 419.82439 285.593822 
+L 845.084773 285.593822 
+L 845.084773 315.441637 
+L 419.82439 315.441637 
+z
+" clip-path="url(#p2a4059bf77)" style="fill: #056030"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 419.82439 381.877097 
+L 497.462388 381.877097 
+L 497.462388 411.724912 
+L 419.82439 411.724912 
+z
+" clip-path="url(#p2a4059bf77)" style="fill: #056030"/>
+   </g>
+   <g id="line2d_13">
+    <path d="M 419.82439 459 
+L 419.82439 75.6 
+" clip-path="url(#p2a4059bf77)" style="fill: none; stroke: #183025; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 124.8 459 
+L 124.8 75.6 
+" style="fill: none; stroke: #8eaf79; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 124.8 459 
+L 931.2 459 
+" style="fill: none; stroke: #8eaf79; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #2e7d42" x="654.584248" y="140.965988" transform="rotate(-0 654.584248 140.965988)">+5.6</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #687568" x="433.592195" y="237.249262" transform="rotate(-0 433.592195 237.249262)">+0.0</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #b25b49" x="193.426394" y="333.532537" transform="rotate(-0 193.426394 333.532537)">-5.4</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #2e7d42" x="511.230193" y="429.815812" transform="rotate(-0 511.230193 429.815812)">+2.0</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #687568" x="433.592195" y="111.118172" transform="rotate(-0 433.592195 111.118172)">+0.0</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #b25b49" x="254.762026" y="207.401447" transform="rotate(-0 254.762026 207.401447)">-3.8</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #2e7d42" x="858.852577" y="303.684722" transform="rotate(-0 858.852577 303.684722)">+10.8</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Microsoft YaHei', 'STZhongsong', 'STXingkai', 'KaiTi', 'Source Han Sans CN', 'DengXian', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #2e7d42" x="511.230193" y="399.967997" transform="rotate(-0 511.230193 399.967997)">+2.0</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_13">
+     <path d="M 402.34 50.324375 
+L 426.74 50.324375 
+L 426.74 41.784375 
+L 402.34 41.784375 
+z
+" style="fill: #76a55f"/>
+    </g>
+    <g id="text_18">
+     <text style="font-size: 12.2px; font-family: 'Microsoft YaHei'; text-anchor: start; fill: #056030" x="436.5" y="50.324375" transform="rotate(-0 436.5 50.324375)">加入知识图谱</text>
+    </g>
+    <g id="patch_14">
+     <path d="M 534.1 50.324375 
+L 558.5 50.324375 
+L 558.5 41.784375 
+L 534.1 41.784375 
+z
+" style="fill: #056030"/>
+    </g>
+    <g id="text_19">
+     <text style="font-size: 12.2px; font-family: 'Microsoft YaHei'; text-anchor: start; fill: #056030" x="568.26" y="50.324375" transform="rotate(-0 568.26 50.324375)">再加入空间检索</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p2a4059bf77">
+   <rect x="124.8" y="75.6" width="806.4" height="383.4"/>
+  </clipPath>
+ </defs>
+</svg>

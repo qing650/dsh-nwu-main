@@ -1,0 +1,82 @@
+# ---------------------------------------------------------------------------
+# Secrets and machine-local settings
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# Keys, certificates, and credential stores
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+
+# Local DSH, agent, and editor state (may contain credentials)
+/.dsh/
+**/.credentials.yaml
+**/.credentials.yaml.*
+/.claude/
+/.private/
+/.vscode/
+/.idea/
+
+# ---------------------------------------------------------------------------
+# Dependencies, caches, and generated builds
+# ---------------------------------------------------------------------------
+**/node_modules/
+**/.pnpm-store/
+**/.npm/
+**/.yarn/
+**/.pnp.*
+**/dist/
+deepseek-harness-master/deepseek-harness-master/**/lib/
+**/*.tsbuildinfo
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/*.egg-info/
+.venv/
+venv/
+
+# ---------------------------------------------------------------------------
+# Runtime state, logs, and test artifacts
+# ---------------------------------------------------------------------------
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+output/
+coverage/
+.coverage
+tmp/
+.playwright-cli/
+web/qa-shots/
+
+# ---------------------------------------------------------------------------
+# Local field materials and generated user knowledge
+# ---------------------------------------------------------------------------
+data/photos/
+data/knowledge/
+data/legacy-backup/
+data/*.sqlite
+data/*.sqlite-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+
+# Third-party Wallpaper Engine source removed from the public package
+背景/
+
+# ---------------------------------------------------------------------------
+# Operating system files
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini

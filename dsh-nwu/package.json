@@ -1,0 +1,23 @@
+{
+  "name": "dsh-nwu",
+  "description": "西北大学教务知识问答系统的双业务插件：知识维护审核发布与教务问答只读服务",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./tools.js": "./src/tools.js",
+    "./build-tools.js": "./src/build-tools.js"
+  },
+  "files": [
+    "src"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1-rc.1",
+    "@deepseek-ai/dsh-tools": ">=0.0.1-rc.1",
+    "@deepseek-ai/dsh-system-prompt": ">=0.0.1-rc.1",
+    "dsh-georag": ">=0.1.0"
+  }
+}

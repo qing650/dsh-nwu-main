@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#05100b">
+  <title>知识星系｜西北大学教务知识问答系统</title>
+  <style>
+    :root{color:#e7f2e9;background:#05100b;font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-synthesis:none}
+    *{box-sizing:border-box}html,body,#galaxy{width:100%;height:100%;margin:0;overflow:hidden}
+    body{background:radial-gradient(1100px 780px at 72% -14%,#12281c 0%,transparent 60%),radial-gradient(900px 700px at -6% 112%,#0d2013 0%,transparent 62%),#05100b}
+    button{font:inherit;color:inherit}button:focus-visible,a:focus-visible{outline:2px solid #a7d8a8;outline-offset:3px}
+    #stars{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.8}
+    #galaxy{position:fixed;inset:0;z-index:1}
+
+    .top{position:fixed;z-index:5;left:0;right:0;top:0;display:flex;align-items:center;height:67px;padding:0 24px;border-bottom:1px solid rgba(195,224,201,.1);background:linear-gradient(180deg,rgba(4,14,9,.92),rgba(6,18,12,.7));backdrop-filter:blur(10px)}
+    .brand,.back{pointer-events:auto;text-decoration:none}.brand{display:flex;align-items:center;gap:9px;color:#f0f7f0}.brand-mark{width:25px;height:25px}.brand b{font:650 21px/1 "Noto Serif SC","Songti SC",serif;letter-spacing:.09em}.brand span{margin-left:4px;color:#9fb7a6;font-size:12px}
+    .top-divider{width:1px;height:22px;margin:0 18px;background:rgba(208,230,210,.18)}.view-name{font:600 15px/1 "Noto Serif SC","Songti SC",serif;letter-spacing:.12em;color:#c3d6c6}
+    .dataset{margin-left:auto;display:flex;gap:8px;align-items:center;color:#a2b8a7;font-size:12px}.dataset b{color:#dceadf;font-weight:600}.dataset i{width:5px;height:5px;border-radius:50%;background:#6bb680;box-shadow:0 0 0 4px rgba(107,182,128,.1)}
+    .back{margin-left:24px;color:#b7d6bd;font-size:12px}.back:hover{color:#f0fff2}
+
+    .legend{position:fixed;z-index:5;left:22px;top:89px;display:flex;flex-wrap:wrap;gap:6px;max-width:min(520px,calc(100vw - 44px))}
+    .kind{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(194,224,200,.16);border-radius:999px;padding:6px 10px;background:rgba(10,26,17,.78);color:#c1d4c4;font-size:11px;line-height:1;cursor:pointer;backdrop-filter:blur(12px);transition:opacity .16s ease,background .16s ease}
+    .kind:hover{background:rgba(45,84,60,.6)}.kind.off{opacity:.32}.kind i{width:7px;height:7px;border-radius:50%}
+    .kind small{opacity:.6;font-size:10px}
+
+    .hint{position:fixed;z-index:4;left:22px;bottom:22px;display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid rgba(196,226,201,.12);border-radius:999px;background:rgba(8,22,14,.72);color:#9db5a3;font-size:11px;backdrop-filter:blur(15px)}
+    .hint kbd{padding:2px 5px;border:1px solid rgba(209,236,213,.16);border-radius:4px;background:rgba(255,255,255,.055);color:#d6e7d9;font:10px/1 "SFMono-Regular",Consolas,monospace}
+    .controls{position:fixed;z-index:7;right:22px;bottom:22px;display:flex;gap:7px}
+    .control{display:grid;place-items:center;min-width:42px;height:42px;padding:0 12px;border:1px solid rgba(197,227,203,.16);border-radius:13px;background:rgba(10,26,17,.94);box-shadow:0 12px 28px rgba(0,0,0,.22);color:#d3e7d7;font:600 12px/1 "Noto Sans SC",sans-serif;cursor:pointer;transition:transform .14s ease,background .14s ease}
+    .control:hover{background:#1d4230;transform:translateY(-1px)}.control:active{transform:scale(.96)}
+    .control.on{background:#dff0e2;border-color:#dff0e2;color:#143726}
+
+    .inspector{position:fixed;z-index:6;right:22px;top:89px;width:min(400px,calc(100vw - 44px));max-height:calc(100vh - 200px);overflow:auto;overscroll-behavior:contain;padding:18px;border:1px solid rgba(203,228,207,.15);border-radius:16px;background:linear-gradient(150deg,rgba(13,32,21,.96),rgba(7,20,13,.94));box-shadow:0 26px 70px rgba(0,0,0,.4);backdrop-filter:blur(12px);transform:translateX(calc(100% + 30px));opacity:0;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s ease}
+    .inspector.show{transform:translateX(0);opacity:1}
+    .inspector .close{position:absolute;right:11px;top:11px;width:26px;height:26px;border:0;border-radius:8px;background:transparent;color:#a7beac;font-size:19px;line-height:1;cursor:pointer}
+    .inspector .close:hover{background:rgba(131,180,142,.13);color:#eff8f1}
+    .eyebrow{display:flex;align-items:center;gap:7px;margin-bottom:8px;color:#95b39c;font-size:10px;letter-spacing:.12em}
+    .eyebrow i{width:8px;height:8px;border-radius:50%;background:#77a77d}
+    .inspector h2{margin:0;color:#edf7ef;font:600 20px/1.4 "Noto Serif SC","Songti SC",serif;padding-right:24px}
+    .inspector .meta{margin-top:6px;color:#8fa998;font-size:11px}
+    .inspector .body{margin-top:12px;color:#c6d6c9;font-size:12.5px;line-height:1.85;white-space:pre-wrap;word-break:break-word}
+    .inspector .body:empty::before{content:"这个节点目前只有关系信息。";color:#84a08c}
+
+    .loading{position:fixed;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;gap:10px;min-width:224px;padding:14px 16px;border:1px solid rgba(194,227,200,.15);border-radius:14px;background:rgba(9,25,16,.94);box-shadow:0 24px 68px rgba(0,0,0,.3);color:#d3e5d6;font-size:12px}
+    .loading-bars{display:grid;grid-template-columns:1.1fr .8fr .55fr;gap:5px}.loading-bars i{height:3px;border-radius:2px;background:#7eb18a;transform-origin:left;animation:loadbar 1s ease-in-out infinite}.loading-bars i:nth-child(2){animation-delay:.12s}.loading-bars i:nth-child(3){animation-delay:.24s}
+    @keyframes loadbar{50%{transform:scaleX(.35);opacity:.35}}.error{color:#f0c2b6}.hidden{display:none!important}
+
+    @media(max-width:760px){
+      .top{height:59px;padding:0 14px}.brand span,.top-divider,.dataset,.back{display:none}.brand b{font-size:19px}.view-name{margin-left:auto;font-size:14px}
+      .legend{left:12px;top:71px}.hint{left:12px;bottom:12px}.hint span{display:none}
+      .controls{right:12px;bottom:12px}.control{min-width:38px;height:38px}
+      .inspector{right:12px;top:auto;bottom:12px;max-height:46vh}
+    }
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div id="galaxy" aria-label="三维教务知识星系"></div>
+
+  <header class="top">
+    <a class="brand" href="/" aria-label="返回西北大学教务问答">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M5 17.6V27c3.2 2.1 6.7 3 12 3s8.8-.9 12-3v-9.4" stroke="#b9d6ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17.6 20 9l15 8.6L20 26 5 17.6Z" fill="#b9d6ff"/><path d="M32.5 15.6v8.7" stroke="#e6f0ff" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <b>西北大学</b><span>教务知识问答系统</span>
+    </a>
+    <i class="top-divider"></i><div class="view-name">知识星系</div>
+    <div class="dataset"><i></i><b id="stat">载入中</b><span>教务知识持续更新</span></div>
+    <a class="back" href="/nwu/knowledge-graph">知识图谱</a>
+    <a class="back" href="/">返回教务问答</a>
+  </header>
+
+  <nav class="legend" id="legend" aria-label="按类型筛选节点"></nav>
+
+  <aside class="inspector" id="inspector" aria-live="polite">
+    <button class="close" id="detail-close" type="button" aria-label="关闭详情">×</button>
+    <div class="eyebrow"><i id="detail-dot"></i><span id="detail-kind"></span></div>
+    <h2 id="detail-title"></h2>
+    <div class="meta" id="detail-meta"></div>
+    <div class="body" id="detail-body"></div>
+  </aside>
+
+  <div class="hint"><kbd>拖动</kbd><span>旋转星系</span><kbd>滚轮</kbd><span>推近拉远</span><kbd>点击星点</kbd><span>阅读知识</span></div>
+  <div class="controls">
+    <button class="control on" id="spin" type="button" title="自动旋转">自转</button>
+    <button class="control" id="refit" type="button" title="回到全景">全景</button>
+  </div>
+  <div class="loading" id="loading"><span>正在点亮知识星系</span><div class="loading-bars" aria-hidden="true"><i></i><i></i><i></i></div></div>
+
+  <script src="/nwu/assets/3d-force-graph.min.js"></script>
+  <script>
+    (() => {
+      const palette = {
+        '资料夹': '#3f8f60', '资料': '#d9a84e', '草稿': '#c96f8e', '索引': '#c76f9d',
+        '政策文件': '#d2604f', '办事指南': '#3b86c6', '常见问题': '#2aa382',
+        '通知公告': '#e09a35', '名词解释': '#6d6de0',
+      }
+      const loading = document.querySelector('#loading')
+      const stat = document.querySelector('#stat')
+      const legend = document.querySelector('#legend')
+      const inspector = document.querySelector('#inspector')
+      const spinButton = document.querySelector('#spin')
+      const color = kind => palette[kind] || '#8aa897'
+
+      // 星空背景
+      const stars = document.querySelector('#stars')
+      function paintStars() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2)
+        stars.width = innerWidth * dpr
+        stars.height = innerHeight * dpr
+        const c = stars.getContext('2d')
+        c.scale(dpr, dpr)
+        c.clearRect(0, 0, innerWidth, innerHeight)
+        for (let i = 0; i < 230; i++) {
+          const x = Math.random() * innerWidth
+          const y = Math.random() * innerHeight
+          const r = Math.random() * 1.1 + .2
+          c.beginPath()
+          c.arc(x, y, r, 0, Math.PI * 2)
+          c.fillStyle = 'rgba(' + (200 + Math.random() * 55 | 0) + ',' + (215 + Math.random() * 40 | 0) + ',210,' + (Math.random() * .5 + .12).toFixed(2) + ')'
+          c.fill()
+        }
+      }
+      paintStars()
+      window.addEventListener('resize', paintStars)
+
+      if (!window.ForceGraph3D) {
+        loading.innerHTML = '<span class="error">三维组件加载失败，请刷新页面。</span>'
+        return
+      }
+
+      const activeKinds = new Set()
+      const degree = new Map()
+      let graph = null
+
+      function renderLegend(nodes) {
+        legend.replaceChildren()
+        const counts = {}
+        for (const node of nodes) counts[node.kind] = (counts[node.kind] || 0) + 1
+        for (const kind of Object.keys(counts).sort((a, b) => counts[b] - counts[a])) {
+          const chip = document.createElement('button')
+          chip.type = 'button'
+          chip.className = 'kind' + (activeKinds.has(kind) ? '' : ' off')
+          const dot = document.createElement('i')
+          dot.style.background = color(kind)
+          const count = document.createElement('small')
+          count.textContent = counts[kind]
+          chip.append(dot, document.createTextNode(kind + ' '), count)
+          chip.addEventListener('click', () => {
+            if (activeKinds.has(kind)) activeKinds.delete(kind)
+            else activeKinds.add(kind)
+            renderLegend(nodes)
+            graph.nodeVisibility(node => activeKinds.has(node.kind))
+              .linkVisibility(link => activeKinds.has(link.source.kind) && activeKinds.has(link.target.kind))
+          })
+          legend.append(chip)
+        }
+      }
+
+      async function openDetail(node) {
+        document.querySelector('#detail-dot').style.background = color(node.kind)
+        document.querySelector('#detail-kind').textContent = node.kind
+        document.querySelector('#detail-title').textContent = node.title
+        document.querySelector('#detail-meta').textContent = (degree.get(node.id) || 0) + ' 条星际关联'
+        const body = document.querySelector('#detail-body')
+        body.textContent = ''
+        inspector.classList.add('show')
+        if (!node.hasContent) return
+        try {
+          const response = await fetch('/nwu/api/evolution/node?id=' + encodeURIComponent(node.id), { cache: 'no-store' })
+          if (!response.ok) return
+          const detail = await response.json()
+          const text = String(detail.markdown || detail.content || '')
+            .replace(/^---[\s\S]*?---\s*/u, '')
+            .replace(/\{\{photo:[^}]+\}\}/g, '')
+            .replace(/\[\[([^\]]+?)\]\]/g, (_, inner) => inner.replace(/\\\|/g, '|').split('|').pop().split('#')[0])
+            .replace(/^#{1,4}\s+/gm, '')
+            .replace(/[*_`>]/g, '')
+            .replace(/\n{3,}/g, '\n\n')
+            .trim()
+          body.textContent = text.slice(0, 700) + (text.length > 700 ? '…' : '')
+        } catch {}
+      }
+      document.querySelector('#detail-close').addEventListener('click', () => inspector.classList.remove('show'))
+
+      let spinning = true
+      function setSpin(value) {
+        spinning = value
+        spinButton.classList.toggle('on', value)
+        if (graph) graph.controls().autoRotate = value
+      }
+      spinButton.addEventListener('click', () => setSpin(!spinning))
+      document.querySelector('#refit').addEventListener('click', () => {
+        if (graph) graph.zoomToFit(700, 70)
+      })
+
+      async function load() {
+        try {
+          const response = await fetch('/nwu/api/evolution/graph', { cache: 'no-store' })
+          if (!response.ok) throw new Error('接口返回 ' + response.status)
+          const payload = await response.json()
+          const nodes = (payload.nodes || []).map(node => ({ ...node, id: String(node.id), title: String(node.title || '未命名') }))
+          const links = (payload.links || [])
+            .map(link => ({ source: String(link.source), target: String(link.target), type: link.type }))
+          const ids = new Set(nodes.map(node => node.id))
+          const usable = links.filter(link => ids.has(link.source) && ids.has(link.target))
+          for (const link of usable) {
+            degree.set(link.source, (degree.get(link.source) || 0) + 1)
+            degree.set(link.target, (degree.get(link.target) || 0) + 1)
+          }
+          for (const node of nodes) activeKinds.add(node.kind)
+          stat.textContent = nodes.length + ' 颗知识星 · ' + usable.length + ' 条关联'
+          renderLegend(nodes)
+
+          graph = ForceGraph3D()(document.querySelector('#galaxy'))
+            .backgroundColor('rgba(0,0,0,0)')
+            .showNavInfo(false)
+            .nodeId('id')
+            .nodeLabel(node => '<div style="padding:5px 9px;border-radius:8px;background:rgba(6,18,12,.92);border:1px solid ' + color(node.kind) + '55;color:#e9f4ea;font-size:12px">' + node.title + '<span style="margin-left:7px;color:' + color(node.kind) + '">' + node.kind + '</span></div>')
+            .nodeColor(node => color(node.kind))
+            .nodeOpacity(.94)
+            .nodeResolution(14)
+            .nodeVal(node => Math.max(1.2, Math.min(20, (degree.get(node.id) || 1) * .85)))
+            .linkColor(() => '#9fd4ae')
+            .linkOpacity(.16)
+            .linkWidth(0)
+            .linkDirectionalParticles(link => (degree.get(typeof link.source === 'object' ? link.source.id : link.source) || 0) >= 10 ? 2 : 0)
+            .linkDirectionalParticleWidth(1.25)
+            .linkDirectionalParticleSpeed(.0052)
+            .linkDirectionalParticleColor(() => '#cdeeda')
+            .warmupTicks(70)
+            .cooldownTime(9000)
+            .onNodeClick(node => {
+              setSpin(false)
+              const distance = 130
+              const len = Math.hypot(node.x, node.y, node.z) || 1
+              const ratio = 1 + distance / len
+              graph.cameraPosition({ x: node.x * ratio, y: node.y * ratio, z: node.z * ratio }, node, 900)
+              openDetail(node)
+            })
+            .onBackgroundClick(() => inspector.classList.remove('show'))
+            .onEngineStop(() => {
+              if (graph.__fitted) return
+              graph.__fitted = true
+              // 离群星会把包围盒撑得很大，按到质心距离的 88 分位取景
+              const { nodes: laid } = graph.graphData()
+              const cx = laid.reduce((sum, n) => sum + n.x, 0) / laid.length
+              const cy = laid.reduce((sum, n) => sum + n.y, 0) / laid.length
+              const cz = laid.reduce((sum, n) => sum + n.z, 0) / laid.length
+              const dists = laid.map(n => Math.hypot(n.x - cx, n.y - cy, n.z - cz)).sort((a, b) => a - b)
+              const rmax = dists[Math.floor(dists.length * .88)]
+              graph.zoomToFit(800, 20, node => Math.hypot(node.x - cx, node.y - cy, node.z - cz) <= rmax)
+            })
+            .graphData({ nodes, links: usable })
+
+          graph.controls().autoRotate = true
+          graph.controls().autoRotateSpeed = .55
+          graph.controls().addEventListener('start', () => { if (spinning) setSpin(false) })
+          setTimeout(() => graph.zoomToFit(900, 45), 1600)
+          window.addEventListener('resize', () => graph.width(innerWidth).height(innerHeight))
+          window.__nwuGalaxy = graph
+        } catch (error) {
+          loading.innerHTML = '<span class="error">知识星系加载失败：' + String(error.message || error) + '</span>'
+          return
+        }
+        loading.classList.add('hidden')
+      }
+      load()
+    })()
+  </script>
+</body>
+</html>

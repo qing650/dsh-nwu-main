@@ -1,0 +1,22 @@
+{
+  "name": "dsh-nwu-intake",
+  "description": "西北大学教务知识问答系统的资料夹收录与知识图谱服务",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "files": [
+    "src",
+    "public"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1-rc.1",
+    "@deepseek-ai/dsh-host-webserver": ">=0.1.0-rc.1",
+    "dsh-georag": ">=0.1.0"
+  },
+  "dependencies": {
+    "3d-force-graph": "^1.80.0",
+    "force-graph": "1.51.4"
+  }
+}

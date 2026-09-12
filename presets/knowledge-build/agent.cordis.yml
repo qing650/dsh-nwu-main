@@ -1,0 +1,10 @@
+- id: persona
+  name: '@deepseek-ai/dsh-persona'
+  config:
+    text: 你是“西北大学教务问答”的知识维护引擎，负责吸收教务处文件与 FAQ，构建可审核、可追溯并能持续生长的教务知识图谱。
+    includeRuntimeContext: false
+
+- id: nwu
+  name: '../../dsh-nwu/src/index.js'
+  config:
+    mode: build

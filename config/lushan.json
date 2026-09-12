@@ -1,0 +1,193 @@
+{
+  "id": "lushan",
+  "site": {
+    "name": "庐山",
+    "title": "问山：地理野外实习自成长智能助手",
+    "brand": "问山：地理野外实习自成长智能助手",
+    "agentName": "问山",
+    "agentTagline": "位置感知 · 检索有据 · 离线可用",
+    "credit": "实习数据库 2022 · 每日野外实测 · 部分点位为近似标注",
+    "hello": "站在庐山任意一点，问它——\n脚下是什么岩层，眼前是什么地貌，\n它与三次构造抬升是什么关系。",
+    "inputPlaceholder": "问庐山：地质、地貌、土壤、植被、气象、人文…"
+  },
+  "paths": {
+    "gdb": "../实习数据库_2022.gdb",
+    "vault": "../Obsidian知识库",
+    "daily": "../每日整理",
+    "data": "data",
+    "root": "."
+  },
+  "photo": {
+    "maxEdge": 420,
+    "quality": 58,
+    "capPerPoint": 6,
+    "capRoadside": 12
+  },
+  "note": {
+    "mdMaxChars": 14000
+  },
+  "vault": {
+    "skipFolders": [".obsidian", "模板", "附件"],
+    "dayGlob": "每日/*.md",
+    "pointGlob": "讲解点/{mmdd}-*.md",
+    "placeFolder": "地点",
+    "weatherPath": "气象/{date} 气象观测.md"
+  },
+  "gdb": {
+    "areaLayer": "实习区域",
+    "pad": 0.015,
+    "water": [
+      { "layer": "水系_面", "tol": 8e-5 },
+      { "layer": "湖泊水库_region", "tol": 8e-5 },
+      { "layer": "河流_region", "tol": 1.2e-4 }
+    ],
+    "waterNoteLayer": "水利要素及其附属设施_注记",
+    "waterNoteField": "TextString",
+    "riverLineLayer": "水系_线",
+    "roads": [
+      { "layer": "高速公路_polyline", "rank": "hw", "tol": 1.2e-4 },
+      { "layer": "国道_polyline", "rank": "major", "tol": 1.2e-4 },
+      { "layer": "省道_polyline", "rank": "major", "tol": 1.2e-4 },
+      { "layer": "县道_polyline", "rank": "road", "tol": 1.2e-4 },
+      { "layer": "城市道路", "rank": "road", "tol": 1e-4 },
+      { "layer": "市区道路_polyline", "rank": "minor", "tol": 1.2e-4 },
+      { "layer": "乡村道路", "rank": "minor", "tol": 1.2e-4 }
+    ],
+    "geologyLayer": "地质分区",
+    "faultLayer": "断层",
+    "foldLayer": "轴迹",
+    "attitudeLayer": "产状",
+    "soilLayer": "土壤类型",
+    "soilField": "土壤类型名",
+    "vegLayer": "植被类型",
+    "vegField": "YOU_SHI_SZ",
+    "peaks": [
+      { "layer": "山峰", "field": "name" },
+      { "layer": "山_font_point", "field": "NAME" }
+    ],
+    "pois": [
+      { "layer": "旅游景点", "field": "NAME", "kind": "scenic" },
+      { "layer": "驻地", "field": "Name", "kind": "base", "fallback": "驻地" },
+      { "layer": "水系_点", "field": "名称", "kind": "spring", "skip": ["无"] }
+    ],
+    "gazLayers": [
+      { "layer": "山峰", "field": "name" },
+      { "layer": "山_font_point", "field": "NAME" },
+      { "layer": "旅游景点", "field": "NAME" },
+      { "layer": "乡镇_point", "field": "NAME" },
+      { "layer": "驻地", "field": "Name" }
+    ]
+  },
+  "mapThemes": [
+    { "id": "none", "label": "底图" },
+    { "id": "geo", "label": "地质", "layer": "geology" },
+    { "id": "soil", "label": "土壤", "layer": "soil" },
+    { "id": "veg", "label": "植被", "layer": "vegetation" }
+  ],
+  "kinds": {
+    "order": ["讲解点", "地点", "概念", "气象", "物种", "每日", "主线", "索引"],
+    "colors": {
+      "讲解点": { "light": "#eb6834", "dark": "#d95926" },
+      "地点": { "light": "#2a78d6", "dark": "#3987e5" },
+      "概念": { "light": "#1baf7a", "dark": "#199e70" },
+      "气象": { "light": "#eda100", "dark": "#c98500" },
+      "物种": { "light": "#008300", "dark": "#008300" },
+      "每日": { "light": "#4a3aa7", "dark": "#9085e9" },
+      "主线": { "light": "#e34948", "dark": "#e66767" },
+      "索引": { "light": "#e87ba4", "dark": "#d55181" }
+    },
+    "ring": { "每日": 0, "索引": 0, "主线": 70, "讲解点": 150, "气象": 150, "概念": 265, "地点": 265, "物种": 345 }
+  },
+  "soilGroups": ["红壤", "黄壤", "棕壤", "黄棕壤", "草甸土", "水稻土", "潮土", "石灰土", "紫色土", "马肝土", "岩性土"],
+  "eraNorm": {
+    "rename": { "早三叠世": "三叠纪", "早白垩世": "白垩纪", "清白口纪": "青白口纪" },
+    "intrusiveWhenBlank": { "rockClassContains": "岩浆", "symbolStartsWith": ["γ", "η"], "label": "岩浆侵入体" }
+  },
+  "gazetteer": {
+    "alias": {
+      "牯岭": "牯岭镇",
+      "芦林湖": "芦林湖水库",
+      "电站大坝": "庐山电站拦河坝",
+      "大月山水库": "大月山水库",
+      "如琴湖": "如琴湖"
+    },
+    "manifestAnchors": {
+      "7.10": {
+        "1": "半山腰破碎带",
+        "2": "仰天坪别墅区",
+        "3": "晨光峰日出观景台",
+        "7": "双桥山群露头",
+        "8": "含鄱口",
+        "9": "庐山植物园"
+      }
+    },
+    "points": [
+      { "n": "五老峰", "x": 116.0065, "y": 29.539, "approx": true },
+      { "n": "三叠泉", "x": 116.060661, "y": 29.540182, "approx": true },
+      { "n": "如琴湖", "x": 115.96935, "y": 29.56578 },
+      { "n": "锦绣谷", "x": 115.96926, "y": 29.5663 },
+      { "n": "仙人洞", "x": 115.96353, "y": 29.56299 },
+      { "n": "御碑亭", "x": 115.9626, "y": 29.56244 },
+      { "n": "大天池", "x": 115.9558, "y": 29.55756 },
+      { "n": "猴谷", "x": 115.95606, "y": 29.55742 },
+      { "n": "龙首崖", "x": 115.95456, "y": 29.5567 },
+      { "n": "月照松林", "x": 115.98216, "y": 29.56838, "approx": true },
+      { "n": "飞来石", "x": 115.98355, "y": 29.57256, "approx": true },
+      { "n": "庐山博物馆", "x": 115.9767, "y": 29.5478, "approx": true },
+      { "n": "大林路露头", "x": 115.964, "y": 29.5662, "approx": true },
+      { "n": "观景台", "x": 115.9637, "y": 29.5679, "approx": true },
+      { "n": "石门涧", "x": 115.9385, "y": 29.556, "approx": true },
+      { "n": "鄱阳湖", "x": 116.06, "y": 29.46, "approx": true },
+      { "n": "大校场谷地", "x": 115.993, "y": 29.5588, "approx": true },
+      { "n": "女儿城", "x": 115.9898, "y": 29.561, "approx": true },
+      { "n": "大月山", "x": 116.010779, "y": 29.571529 }
+    ],
+    "interpolated": [
+      {
+        "from": "芦林湖水库",
+        "to": "庐山电站拦河坝",
+        "points": [
+          { "n": "交芦桥", "t": 0.18 },
+          { "n": "黄龙寺", "t": 0.52, "dy": 0.0008 },
+          { "n": "三宝树", "t": 0.58, "dy": 0.0004 },
+          { "n": "黄龙潭", "t": 0.68 },
+          { "n": "乌龙潭", "t": 0.8, "dy": -0.0006 }
+        ]
+      },
+      {
+        "from": "庐山会议旧址",
+        "to": "大月山水库",
+        "points": [
+          { "n": "东谷", "t": 0.15, "dy": 0.0012 },
+          { "n": "长冲沟", "t": 0.35, "dy": 0.001 },
+          { "n": "汉口峡", "t": 0.72, "dy": 0.0008 }
+        ]
+      }
+    ],
+    "offsets": [
+      {
+        "from": "仰天坪水库",
+        "points": [
+          { "n": "羊圈坪水库", "dx": 0.0028, "dy": 0.0016 },
+          { "n": "仰天坪", "dx": -0.001, "dy": -0.002 }
+        ]
+      },
+      { "from": "月照松林", "points": [{ "n": "松门别墅", "dy": 0.0003 }] },
+      { "from": "锦绣谷", "points": [{ "n": "天桥", "dx": -0.0008, "dy": 0.0008 }] },
+      { "from": "牯岭镇", "points": [{ "n": "牯牛岭", "dx": 0.0015, "dy": -0.001 }] }
+    ]
+  },
+  "qa": {
+    "bounds": [115.8, 29.4, 116.2, 29.7],
+    "demoAnchor": { "coord": [115.9605, 29.5722], "label": "牯岭镇（演示）" },
+    "examples": [
+      "什么是河流袭夺？",
+      "五老峰的岩层产状是多少？",
+      "毛竹为什么能长在黄龙寺？",
+      "三叠泉是怎么形成的？",
+      "气压随高度怎么变化？",
+      "含鄱口附近有哪些讲解点？"
+    ],
+    "hereQuestion": "我脚下是什么岩层、土壤和植被？附近讲过什么？"
+  }
+}

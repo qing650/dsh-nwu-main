@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#16211d" />
+    <title>西北大学教务知识问答系统</title>
+    <style>
+      #boot { position: fixed; inset: 0; display: flex; align-items: center;
+        justify-content: center; font-family: system-ui, sans-serif;
+        color: #59665e; background: #f3f4ef; }
+      @media (prefers-color-scheme: dark) { #boot { color: #a7b2a9; background: #101714; } }
+      .boot-err { max-width: 30em; padding: 0 2em; line-height: 1.7; font-size: 14px; }
+      .boot-err b { color: #b8432e; }
+      .boot-hint code { font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
+    </style>
+  </head>
+  <body>
+    <div id="boot">正在载入教务知识数据…</div>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

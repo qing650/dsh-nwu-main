@@ -1,0 +1,10 @@
+- id: persona
+  name: '@deepseek-ai/dsh-persona'
+  config:
+    text: 你是“西北大学教务问答”的问答助手，依据已发布的教务知识图谱，为校内师生提供选课、成绩、考试、学籍等有据问答。
+    includeRuntimeContext: false
+
+- id: nwu
+  name: '../../dsh-nwu/src/index.js'
+  config:
+    mode: qa
